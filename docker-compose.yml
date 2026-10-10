@@ -1,0 +1,9 @@
+services:
+  tests:
+    build: .
+    environment:
+      WEB_BASE_URL: ${WEB_BASE_URL:-https://practicesoftwaretesting.com}
+      API_BASE_URL: ${API_BASE_URL:-https://api.practicesoftwaretesting.com}
+    volumes:
+      - ./playwright-report:/tests/playwright-report
+      - ./test-results:/tests/test-results

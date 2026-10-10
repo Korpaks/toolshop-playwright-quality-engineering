@@ -1,0 +1,28 @@
+{
+  "name": "toolshop-playwright-quality-engineering",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-style Playwright quality engineering portfolio for the Toolshop e-commerce application",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:api": "playwright test tests/api",
+    "test:ui": "playwright test tests/ui",
+    "test:a11y": "playwright test tests/accessibility",
+    "test:headed": "playwright test --headed --project=chromium",
+    "test:debug": "playwright test --debug --project=chromium",
+    "report": "playwright show-report",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@eslint/js": "^9.38.0",
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.38.0",
+    "eslint-plugin-playwright": "^2.2.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2"
+  }
+}
