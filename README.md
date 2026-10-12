@@ -4,6 +4,16 @@
 
 A production-style **TypeScript + Playwright** test framework for the [Practice Software Testing Toolshop](https://practicesoftwaretesting.com). It demonstrates how a quality engineer can validate an e-commerce system across its browser UI, REST API, accessibility surface, responsive layout, and cross-layer data flow.
 
+## Quality evidence at a glance
+
+| Signal | Evidence |
+|---|---|
+| Automated coverage | 32 independent API, UI, hybrid, mobile, and accessibility tests |
+| CI execution | [GitHub Actions quality pipeline](https://github.com/Korpaks/toolshop-playwright-quality-engineering/actions/workflows/quality.yml) |
+| Browser confidence | Chromium, Firefox, WebKit, and Pixel 7 emulation |
+| Failure diagnostics | Per-job HTML reports, traces, screenshots, and videos retained for 14 days |
+| Strategy | [Risk-based test strategy](docs/TEST_STRATEGY.md) |
+
 ## What this project demonstrates
 
 - Page Object Model for maintainable browser journeys
@@ -29,6 +39,21 @@ tests/accessibility/ Automated WCAG checks
 ```
 
 The suite contains **32 independent tests**. Browser projects cover Chromium, Firefox, and WebKit; mobile-specific tests additionally run against a Pixel 7 profile. See the [test strategy](docs/TEST_STRATEGY.md) for risk-based coverage and scope decisions.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    PT[Playwright Test] --> FX[Shared fixtures]
+    FX --> API[Typed API contexts]
+    FX --> PO[Page objects]
+    API --> SVC[Toolshop REST API]
+    PO --> WEB[Desktop and mobile UI]
+    PT --> HY[Hybrid API-to-UI checks]
+    PT --> AX[axe-core accessibility checks]
+    PT --> E[HTML reports and failure evidence]
+    E --> CI[GitHub Actions matrix]
+```
 
 ## Run locally
 
@@ -70,6 +95,14 @@ The pipeline separates fast static analysis and API feedback from the browser ma
 ## Test target
 
 Practice Software Testing is an intentionally public training application maintained by Testsmith. This repository is an independent portfolio project and is not affiliated with the application owner.
+
+## Known boundaries and tradeoffs
+
+- Public-environment drift can fail otherwise-correct tests; the scheduled pipeline makes that dependency visible.
+- Automated axe checks detect defined rule violations but do not replace keyboard, screen-reader, zoom, or human usability testing.
+- Checkout payment, account creation, and shared inventory mutations are excluded to protect the public environment.
+- Browser retries are CI-only and retain evidence; they are a diagnostic safety net, not a substitute for fixing flaky tests.
+- Performance and security testing require separate workload models and explicit authorization.
 
 ## Author
 
